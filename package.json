@@ -1,0 +1,60 @@
+{
+  "name": "@narkdown/monorepo",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narkdown/monorepo.git"
+  },
+  "license": "MIT",
+  "author": "Younho Choo <yo+github@younho9.com>",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "yarn pkgs:exec yarn build",
+    "clean": "yarn pkgs:exec yarn clean",
+    "format": "yarn pkgs:exec yarn format . --write",
+    "format:pkg": "yarn pkgs:exec format:pkg",
+    "git:commit-msg": "commitlint --edit",
+    "git:install-hooks": "husky install",
+    "git:pre-commit": "lint-staged",
+    "postinstall": "yarn pkgs:check",
+    "lint": "yarn pkgs:exec yarn lint",
+    "pkgs:check": "manypkg check",
+    "pkgs:exec": "manypkg exec",
+    "pkgs:fix": "manypkg fix",
+    "pkgs:run": "manypkg run",
+    "prepare": "yarn git:install-hooks && yarn build",
+    "test": "yarn pkgs:exec yarn test"
+  },
+  "commitlint": {
+    "extends": "@commitlint/config-conventional"
+  },
+  "lint-staged": {
+    "*.{cjs,ts,json,md}": [
+      "prettier --write --ignore-path ./node_modules/@younho9/prettier-config/.prettierignore"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
+  },
+  "prettier": "@younho9/prettier-config",
+  "dependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@commitlint/types": "13.1.0",
+    "@manypkg/cli": "0.18.0",
+    "@tsconfig/node14": "1.0.1",
+    "@younho9/prettier-config": "2.2.2",
+    "@younho9/tsconfig": "^0.1.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.2.3",
+    "prettier": "^2.4.1",
+    "rimraf": "3.0.2",
+    "sort-package-json": "1.52.0",
+    "typescript": "^4.4.4"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  }
+}
